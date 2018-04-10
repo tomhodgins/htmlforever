@@ -75,7 +75,7 @@ def embed(url="#", width="560", height="315", rhs=""):
          + rhs
 
 # Templating Snippets
-def defaultHead(title="", rhs=""):
+def head(title="", rhs=""):
 
   return doctype(
            tag("meta", [["charset", "utf-8"]],
@@ -117,9 +117,9 @@ def eqcss(rhs=""):
          ])\
          + rhs
 
-def eqcssDemo(rhs=""):
+def eqcssDemo(content="", rhs=""):
 
-  return tag("style", [], "\n\n  \n\n",
+  return tag("style", [], "\n\n " + content + " \n\n",
            eqcss())\
          + rhs
 
@@ -130,9 +130,9 @@ def reprocss(rhs=""):
          ])\
          + rhs
 
-def reprocssDemo(rhs=""):
+def reprocssDemo(content="", rhs=""):
 
-  return tag("style", [["process", "auto"]], "\n\n  \n\n",
+  return tag("style", [["process", "auto"]], "\n\n " + content + " \n\n",
            reprocss())\
          + rhs
 
@@ -141,9 +141,9 @@ def selectory(rhs=""):
   return tag("script", [["src", "https://unpkg.com/cssplus/selectory.js"]])\
          + rhs
 
-def selectoryDemo(rhs=""):
+def selectoryDemo(content="", rhs=""):
 
-  return tag("style", [], "\n\n  \n\n",
+  return tag("style", [], "\n\n " + content + " \n\n",
            selectory())\
          + rhs
 

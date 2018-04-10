@@ -83,7 +83,7 @@ function embed(url='#', width="560", height="315", rhs='') {
 }
 
 // Templating Snippets
-function defaultHead(title="", rhs="") {
+function head(title="", rhs="") {
 
   return doctype(
            tag("meta", [["charset", "utf-8"]],
@@ -131,9 +131,9 @@ function eqcss(rhs="") {
 
 }
 
-function eqcssDemo(rhs="") {
+function eqcssDemo(content="", rhs="") {
 
-  return tag("style", [], "\n\n  \n\n",
+  return tag("style", [], "\n\n " + content + " \n\n",
            eqcss())
          + rhs
 
@@ -148,9 +148,9 @@ function reprocss(rhs="") {
 
 }
 
-function reprocssDemo(rhs="") {
+function reprocssDemo(content="", rhs="") {
 
-  return tag("style", [["process", "auto"]], "\n\n  \n\n",
+  return tag("style", [["process", "auto"]], "\n\n " + content + " \n\n",
            reprocss())
          + rhs
 
@@ -163,9 +163,9 @@ function selectory(rhs="") {
 
 }
 
-function selectoryDemo(rhs="") {
+function selectoryDemo(content="", rhs="") {
 
-  return tag("style", [], "\n\n  \n\n",
+  return tag("style", [], "\n\n " + content + " \n\n",
            selectory())
          + rhs
 

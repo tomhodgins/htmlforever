@@ -1,4 +1,4 @@
-(defaultHead("JSinCSS plugin demo",
+(head("JSinCSS plugin demo",
   tag("div", [], "Demo",
     jsincss(
       [["element-query", "eq"]],

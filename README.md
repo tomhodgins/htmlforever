@@ -16,7 +16,7 @@ The data format used for describing HTML with these helper functions assumes tha
 Because of this, we can nest the calls to our helper functions as deeply as we like and it will begin evaluating at the deepest level of nesting and work its way outward. Here's an example of an S-Expression that expands to be an HTML document with some dummy content, a JavaScript plugin, and sample code for that plugin to run:
 
 ```js
-(defaultHead("JSinCSS plugin demo",
+(head("JSinCSS plugin demo",
   tag("div", [], "Demo",
     jsincss(
       [["element-query", "eq"]],

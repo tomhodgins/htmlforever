@@ -82,7 +82,7 @@ def embed(url="#", width="560", height="315", rhs="")
 end
 
 # Templating Snippets
-def defaultHead(title="", rhs="")
+def head(title="", rhs="")
 
   return doctype(
            tag("meta", [["charset", "utf-8"]],
@@ -129,9 +129,9 @@ def eqcss(rhs="")
          + rhs
 end
 
-def eqcssDemo(rhs="")
+def eqcssDemo(content="", rhs="")
 
-  return tag("style", [], "\n\n  \n\n",
+  return tag("style", [], "\n\n " + content + " \n\n",
            eqcss())\
          + rhs
 
@@ -146,9 +146,9 @@ def reprocss(rhs="")
 
 end
 
-def reprocssDemo(rhs="")
+def reprocssDemo(content="", rhs="")
 
-  return tag("style", [["process", "auto"]], "\n\n  \n\n",
+  return tag("style", [["process", "auto"]], "\n\n " + content + " \n\n",
            reprocss())\
          + rhs
 
@@ -161,9 +161,9 @@ def selectory(rhs="")
 
 end
 
-def selectoryDemo(rhs="")
+def selectoryDemo(content="", rhs="")
 
-  return tag("style", [], "\n\n  \n\n",
+  return tag("style", [], "\n\n " + content + " \n\n",
            selectory())\
          + rhs
 
