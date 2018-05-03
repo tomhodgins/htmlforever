@@ -175,7 +175,7 @@ function jsincss(plugins=[], content="", rhs="") {
 
   return tag("script", [["type", "module"]], `
   import jsincss from 'https://unpkg.com/jsincss/index.vanilla.js'
-${plugins.map(plugin => `  import ${plugin[1]} from 'https://unpkg.com/jsincss-${plugin[0]}/index.vanilla.js'\\n`).join("")}
+${plugins.map(plugin => `  import ${plugin[1]} from 'https://unpkg.com/jsincss-${plugin[0]}/index.vanilla.js'\n`).join("")}
   jsincss(()=>\`
 
     ${content}
