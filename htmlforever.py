@@ -46,7 +46,7 @@ def link(url="#", text="", title="", rhs=""):
   text = text or url
   title = title or text
 
-  return tag("a", [["url", url], ["title", title]], text)\
+  return tag("a", [["href", url], ["title", title]], text)\
          + rhs
 
 def embed(url="#", width="560", height="315", rhs=""):
@@ -98,7 +98,7 @@ def mixin(name="mixin", rhs=""):
 
       const attr = selector.replace(/\W/+, '')
 
-      styles += `[data-$name-${attr}='${count}'] { ${rule} }\\n`
+      styles += `[data-$name-${attr}="${count}"] { ${rule} }\\n`
       tag.setAttribute(`data-$name-${attr}`, count)
       count++
 
@@ -113,7 +113,7 @@ def mixin(name="mixin", rhs=""):
 def eqcss(rhs=""):
 
   return tag("script", [
-           ["src", "https://elementqueries.com/EQCSS.js"]
+           ["src", "https://unpkg.com/eqcss/EQCSS.min.js"]
          ])\
          + rhs
 
@@ -151,9 +151,9 @@ def jsincss(plugins=[], content="", rhs=""):
 
   return tag("script", [["type", "module"]],\
     "\n"\
-    + "  import jsincss from 'https://unpkg.com/jsincss/index.js'\n"\
+    + "  import jsincss from 'https://unpkg.com/jsincss/index.vanilla.js'\n"\
     + "".join(map(lambda plugin:
-      "  import " + plugin[1] + " from 'https://unpkg.com/jsincss-" + plugin[0] + "/index.js'\n", plugins))
+      "  import " + plugin[1] + " from 'https://unpkg.com/jsincss-" + plugin[0] + "/index.vanilla.js'\n", plugins))
     + "\n"\
     + "  jsincss(()=>`\n"\
     + "\n"\

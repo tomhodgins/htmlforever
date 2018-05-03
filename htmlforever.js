@@ -106,9 +106,9 @@ function mixin(name="mixin", rhs="") {
 
     document.querySelectorAll(selector).forEach(tag => {
 
-      const attr = selector.replace(/\W/+, '')
+      const attr = selector.replace(/\\W/+, '')
 
-      styles += \`[data-${name}-$\{attr}="$\{count}"] { $\{rule} }\n\`
+      styles += \`[data-${name}-$\{attr}="$\{count}"] { $\{rule} }\\n\`
       tag.setAttribute(\`data-${name}-$\{attr}\`, count)
       count++
 
@@ -125,7 +125,7 @@ function mixin(name="mixin", rhs="") {
 function eqcss(rhs="") {
 
   return tag("script", [
-           ["src", "https://unpkg.com/eqcss/EQCSS.js"]
+           ["src", "https://unpkg.com/eqcss/EQCSS.min.js"]
          ])
          + rhs
 
@@ -174,8 +174,8 @@ function selectoryDemo(content="", rhs="") {
 function jsincss(plugins=[], content="", rhs="") {
 
   return tag("script", [["type", "module"]], `
-  import jsincss from 'https://unpkg.com/jsincss/index.js'
-  ${plugins.map(plugin => `import ${plugin[1]} from 'https://unpkg.com/jsincss-${plugin[0]}/index.js'\n`).join("")}
+  import jsincss from 'https://unpkg.com/jsincss/index.vanilla.js'
+${plugins.map(plugin => `  import ${plugin[1]} from 'https://unpkg.com/jsincss-${plugin[0]}/index.vanilla.js'\\n`).join("")}
   jsincss(()=>\`
 
     ${content}
