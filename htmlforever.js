@@ -1,11 +1,4 @@
 // HTML Definitions
-function doctype(rhs="") {
-
-  return "<!DOCTYPE html>\n"
-         + rhs
-
-}
-
 function tag(name='div', attrs=[], content='', rhs='') {
 
   var voidTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']
@@ -27,6 +20,20 @@ function tag(name='div', attrs=[], content='', rhs='') {
 
 }
 
+// HTML Helpers
+function data(rhs="") {
+
+  return "data:text/html;charset=utf-8,"
+         + rhs
+
+}
+
+function doctype(rhs="") {
+
+  return "<!DOCTYPE html>\n"
+         + rhs
+
+}
 
 function lineBreak(rhs='') {
 
@@ -35,7 +42,6 @@ function lineBreak(rhs='') {
 
 }
 
-// HTML Helpers
 function siblings(name='p', content=[], rhs='') {
 
   return '\n'

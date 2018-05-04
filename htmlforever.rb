@@ -1,11 +1,4 @@
 # HTML Definitions
-def doctype(rhs='')
-
-  return "<!DOCTYPE html>\n"\
-         + rhs
-
-end
-
 def tag(name="div", attrs=[], content="", rhs="")
 
   voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]
@@ -27,6 +20,21 @@ def tag(name="div", attrs=[], content="", rhs="")
 
 end
 
+# HTML Helpers
+def data(rhs="")
+
+  return "data:text/html;charset=utf-8,"\
+         + rhs
+
+end
+
+def doctype(rhs="")
+
+  return "<!DOCTYPE html>\n"\
+         + rhs
+
+end
+
 def lineBreak(rhs="")
 
   return "\n"\
@@ -34,7 +42,6 @@ def lineBreak(rhs="")
 
 end
 
-# HTML Helpers
 def siblings(name="p", content=[], rhs="")
 
   return "\n"\
