@@ -96,20 +96,19 @@ def mixin(name="mixin", rhs=""):
   return tag("script", [], Template('''
   function $name(selector, rule) {
 
-    let styles = ''
-    let count = 0
+    return Array.from(document.querySelectorAll(selector))
 
-    document.querySelectorAll(selector).forEach(tag => {
+      .reduce((styles, tag, count) => {
 
-      const attr = selector.replace(/\W/+, '')
+        const attr = (selector).replace(/\W/+, '')
 
-      styles += `[data-$name-${attr}="${count}"] { ${rule} }\\n`
-      tag.setAttribute(`data-$name-${attr}`, count)
-      count++
+        tag.setAttribute(`data-$name-${attr}`, count)
+        styles += `[data-$name-${attr}="${count}"] { ${rule} }\\n`
+        count++
 
-    })
+        return styles
 
-    return styles
+      }, '')
 
   }
 ''').safe_substitute(name=name))\
