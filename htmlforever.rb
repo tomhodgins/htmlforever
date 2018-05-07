@@ -68,21 +68,21 @@ def embed(url="#", width="560", height="315", rhs="")
            ["width", width],
            ["height", height],
            ["frameborder", "0"],
-           ["style", '''
-             position: absolute;
+           ["style", """
+             position: relative;
              width: 100%;
-             height: 100%;
-             top: 50%;
-             left: 50%;
-             transform: translateX(-50%) translateY(-50%);
-          '''],
+             padding-bottom: calc(100% / (#{width} / #{height}));
+           """]
          ],
            tag("iframe", [
-             ["style", """
-               position: relative;
+             ["style", '''
+               position: absolute;
                width: 100%;
-               padding-bottom: calc(100% / (#{width} / #{height}));
-             """]
+               height: 100%;
+               top: 50%;
+               left: 50%;
+               transform: translateX(-50%) translateY(-50%);
+            ''']
            ]))\
          + rhs
 
