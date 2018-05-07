@@ -64,17 +64,17 @@ function link(url='#', text=url, title=text, rhs='') {
 function embed(url='#', width="560", height="315", rhs='') {
 
   return tag('div', [
-           ['src', url],
-           ['width', width],
-           ['height', height],
-           ['frameborder', "0"],
            ['style', `
              position: relative;
              width: 100%;
              padding-bottom: calc(100% / (${width} / ${height}));
-           `],
+           `]
          ],
            tag('iframe', [
+             ['src', url],
+             ['width', width],
+             ['height', height],
+             ['frameborder', "0"],
              ['style', `
                position: absolute;
                width: 100%;

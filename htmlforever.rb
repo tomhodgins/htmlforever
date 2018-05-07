@@ -64,10 +64,6 @@ end
 def embed(url="#", width="560", height="315", rhs="")
 
   return tag("div", [
-           ["src", url],
-           ["width", width],
-           ["height", height],
-           ["frameborder", "0"],
            ["style", """
              position: relative;
              width: 100%;
@@ -75,6 +71,10 @@ def embed(url="#", width="560", height="315", rhs="")
            """]
          ],
            tag("iframe", [
+             ["src", url],
+             ["width", width],
+             ["height", height],
+             ["frameborder", "0"],
              ["style", '''
                position: absolute;
                width: 100%;

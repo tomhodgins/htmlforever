@@ -57,10 +57,6 @@ def link(url="#", text="", title="", rhs=""):
 def embed(url="#", width="560", height="315", rhs=""):
 
   return tag('div', [
-           ['src', url],
-           ['width', width],
-           ['height', height],
-           ['frameborder', "0"],
            ['style', Template('''
              position: relative;
              width: 100%;
@@ -68,6 +64,10 @@ def embed(url="#", width="560", height="315", rhs=""):
            ''').safe_substitute(width=width, height=height)]
          ],
            tag('iframe', [
+             ['src', url],
+             ['width', width],
+             ['height', height],
+             ['frameborder', "0"],
              ['style', '''
                position: absolute;
                width: 100%;
