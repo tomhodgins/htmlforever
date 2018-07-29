@@ -1,20 +1,29 @@
 // HTML Definitions
-function tag(name='div', attrs=[], content='', rhs='') {
+function tag(name="div", attrs=[], content="", rhs="") {
 
-  var voidTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']
+  var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]
 
   function attributes(attrs) {
 
-    return attrs.map(attr =>
-             ' ' + attr[0] + '="' + attr[1] + '"'
-           ).join('')
+    return attrs.map(attr => {
+
+      var needsQuotes = /[\s"'=<>`]/.test(attr[1])
+      var singleQuoted = /["]/.test(attr[1])
+
+      return /[\s"'=<>`]/.test(attr[1])
+      ? /["]/.test(attr[1])
+        ? " " + attr[0] + "='" + attr[1] + "'"
+        : " " + attr[0] + "=\"" + attr[1] + "\""
+      : " " + attr[0] + "=" + attr[1]
+
+    }).join("")
 
   }
 
   return (
            voidTags.includes(name.toLowerCase())
-           ? '<' + name + attributes(attrs) + '>\n' + content
-           : '<' + name + attributes(attrs) + '>' + content + '</' + name + '>\n'
+           ? "<" + name + attributes(attrs) + ">\n" + content
+           : "<" + name + attributes(attrs) + ">" + content + "</" + name + ">\n"
          )
          + rhs
 
@@ -35,47 +44,47 @@ function doctype(rhs="") {
 
 }
 
-function lineBreak(rhs='') {
+function lineBreak(rhs="") {
 
   return "\n"
          + rhs
 
 }
 
-function siblings(name='p', content=[], rhs='') {
+function siblings(name="p", content=[], rhs="") {
 
-  return '\n'
+  return "\n"
          + content.map(sibling =>
              Array.isArray(sibling)
              ? tag(name, sibling[0], sibling[1])
              : tag(name, [], sibling)
-           ).join('')
+           ).join("")
          + rhs
 
 }
 
-function link(url='#', text=url, title=text, rhs='') {
+function link(url="#", text=url, title=text, rhs="") {
 
-  return tag('a', [['href', url], ['title', title]], text)
+  return tag("a", [["href", url], ["title", title]], text)
          + rhs
 
 }
 
-function embed(url='#', width="560", height="315", rhs='') {
+function embed(url="#", width="560", height="315", rhs="") {
 
-  return tag('div', [
-           ['style', `
+  return tag("div", [
+           ["style", `
              position: relative;
              width: 100%;
              padding-bottom: calc(100% / (${width} / ${height}));
            `]
          ],
-           tag('iframe', [
-             ['src', url],
-             ['width', width],
-             ['height', height],
-             ['frameborder', "0"],
-             ['style', `
+           tag("iframe", [
+             ["src", url],
+             ["width", width],
+             ["height", height],
+             ["frameborder", "0"],
+             ["style", `
                position: absolute;
                width: 100%;
                height: 100%;
@@ -290,6 +299,36 @@ function dummyContent(rhs="") {
                         dummyUl(
                           lineBreak(
                             dummyOl()))))))))))
+         + rhs
+
+}
+
+function table(rhs="") {
+
+  return tag("table", [],
+           tag("thead", [],
+             tag("tr", [],
+               tag("th", [], "One",
+               tag("th", [], "Two",
+               tag("th", [], "Three")))),
+                 tag("tbody", [],
+                   tag("tr", [],
+                     tag("td", [], "One",
+                     tag("td", [], "Two",
+                     tag("td", [], "Three"))),
+                       tag("tr", [],
+                         tag("td", [], "Four",
+                         tag("td", [], "Five",
+                         tag("td", [], "Six"))),
+                           tag("tr", [],
+                             tag("td", [], "Seven",
+                             tag("td", [], "Eight",
+                             tag("td", [], "Nine")))))),
+                               tag("tfoot", [],
+                                 tag("tr", [],
+                                   tag("th", [], "One",
+                                   tag("th", [], "Two",
+                                   tag("th", [], "Three"))))))))
          + rhs
 
 }
