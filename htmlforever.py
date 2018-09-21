@@ -8,44 +8,46 @@ def tag(name="div", attrs=[], content="", rhs=""):
   voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]
 
   def attributes(attrs):
-    #needsQuotes = re.search("", attr[1])
-
-    return "".join(map(lambda attr:
-      " " + attr[0] + "='" + attr[1] + "'"
-        if re.search("\"", attr[1])
-        else " " + attr[0] + "=\"" + attr[1] + "\""
-      if re.search("[\s\"'=<>`]", attr[1])
-      else " " + attr[0] + "=" + attr[1]
-      , attrs)
+    return "".join(
+      map(lambda attr:
+        " " + attr[0] + "='" + attr[1] + "'"
+          if re.search("\"", attr[1])
+          else " " + attr[0] + "=\"" + attr[1] + "\""
+        if re.search("[\s\"'=<>`]", attr[1])
+        else " " + attr[0] + "=" + attr[1], 
+        attrs
+      )
     )
 
   return (
     "<" + name + attributes(attrs) + ">\n" + content
     if (name in voidTags)
     else "<" + name + attributes(attrs) + ">" + content + "</" + name + ">\n"
-  )\
-  + rhs
+  ) + rhs
 
 # HTML Helpers
 def data(rhs=""):
-
   return "data:text/html;charset=utf-8," + rhs
 
 def doctype(rhs=""):
-
   return "<!DOCTYPE html>\n" + rhs
 
 def lineBreak(rhs=""):
-
   return "\n" + rhs
 
 def siblings(name="p", content=[], rhs=""):
-
-  return "\n" + "".join(map(lambda sibling:
-    tag(name, sibling[0], sibling[1])
-    if isinstance(sibling, list)
-    else tag(name, [], sibling)
-  , content)) + rhs
+  return lineBreak(
+    "".join(
+      map(
+        lambda sibling:
+          tag(name, sibling[0], sibling[1])
+          if isinstance(sibling, list)
+          else tag(name, [], sibling)
+        , 
+        content
+      )
+    )
+  ) + rhs
 
 def link(url="#", text="", title="", rhs=""):
 
@@ -56,7 +58,6 @@ def link(url="#", text="", title="", rhs=""):
   return tag("a", [["href", url], ["title", title]], text) + rhs
 
 def embed(url="#", width="560", height="315", rhs=""):
-
   return tag('div', [
     ['style', Template('''
       position: relative;
@@ -76,12 +77,11 @@ def embed(url="#", width="560", height="315", rhs=""):
         top: 50%;
         left: 50%;
         transform: translateX(-50%) translateY(-50%);
-     ''']
+      ''']
     ])) + rhs
 
 # Templating Snippets
 def head(title="", rhs=""):
-
   return doctype(
     tag("meta", [["charset", "utf-8"]],
       tag("meta", [
@@ -91,7 +91,6 @@ def head(title="", rhs=""):
         tag("title", [], title)))) + rhs
 
 def mixin(name="mixin", rhs=""):
-
   return tag("script", [], Template('''
   function $name(selector, rule) {
 
@@ -113,38 +112,31 @@ def mixin(name="mixin", rhs=""):
 ''').safe_substitute(name=name)) + rhs
 
 def eqcss(rhs=""):
-
   return tag("script", [
     ["src", "https://unpkg.com/eqcss/EQCSS.min.js"]
   ]) + rhs
 
 def eqcssDemo(content="", rhs=""):
-
   return tag("style", [], "\n\n " + content + " \n\n",
     eqcss()) + rhs
 
 def reprocss(rhs=""):
-
   return tag("script", [
     ["src", "https://unpkg.com/reprocss/reprocss.js"]
   ]) + rhs
 
 def reprocssDemo(content="", rhs=""):
-
   return tag("style", [["process", "auto"]], "\n\n " + content + " \n\n",
     reprocss()) + rhs
 
 def selectory(rhs=""):
-
   return tag("script", [["src", "https://unpkg.com/cssplus/selectory.js"]]) + rhs
 
 def selectoryDemo(content="", rhs=""):
-
   return tag("style", [], "\n\n " + content + " \n\n",
            selectory()) + rhs
 
 def jsincss(plugins=[], content="", rhs=""):
-
   return tag("script", [["type", "module"]],\
     "\n"\
     + "  import jsincss from 'https://unpkg.com/jsincss/index.vanilla.js'\n"\
@@ -158,7 +150,6 @@ def jsincss(plugins=[], content="", rhs=""):
     + "  `)\n") + rhs
 
 def todo(title="", rhs=""):
-
   return doctype(
     tag("meta", [["charset", "utf-8"]],
       tag("meta", [
@@ -187,7 +178,6 @@ def todo(title="", rhs=""):
 
 # Dummy Content
 def dummyHeadlines(rhs=""):
-
   return tag("h1", [], "I'm an H1 Headline",
     tag("h2", [], "I'm an H2 Headline",
       tag("h3", [], "I'm an H3 Headline",
@@ -196,31 +186,29 @@ def dummyHeadlines(rhs=""):
             tag("h6", [], "I'm an H6 Headline")))))) + rhs
 
 def dummyLi(rhs=""):
-
-  return siblings("li", ["one", [[["class", "target"]], "two"], "three"]) + rhs
+  return siblings("li", [
+    "one",
+    [[["class", "target"]], "two"],
+    "three"
+  ]) + rhs
 
 def dummyUl(rhs=""):
-
   return tag("ul", [], dummyLi()) + rhs
 
 def dummyOl(rhs=""):
-
   return tag("ol", [], dummyLi()) + rhs
 
 def lorem(rhs=""):
-
   return tag("p", [], "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.") + rhs
 
 def loremIpsum(rhs=""):
-
   return tag("p", [], "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.") + rhs
 
 def loremIpsumDolor(rhs=""):
-
-  return tag("p", [], "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.") + rhs
+  return tag("p", [], "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  ) + rhs
 
 def dummyContent(rhs=""):
-
   return dummyHeadlines(
     lineBreak(
       loremIpsumDolor(
@@ -229,12 +217,11 @@ def dummyContent(rhs=""):
             lineBreak(
               lorem(
                 lineBreak(
-                 dummyUl(
-                   lineBreak(
-                     dummyOl())))))))))) + rhs
+                  dummyUl(
+                    lineBreak(
+                      dummyOl())))))))))) + rhs
 
 def table(rhs=""):
-
   return tag("table", [],
     tag("thead", [],
       tag("tr", [],
@@ -262,8 +249,7 @@ def table(rhs=""):
 
 # CLI ability
 if len(sys.argv) > 1:
-
   print(eval(sys.argv[1]))
 
-# example: python3 htmlforever.py 'tag("p", [["class", "demo"]], "Demo")'
-# returns: <p class="demo">Demo</p>
+# example: python htmlforever.py 'tag("p", [["class", "demo"]], "Demo")'
+# returns: <p class=demo>Demo</p>
