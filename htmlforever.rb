@@ -94,7 +94,6 @@ def mixin(name="mixin", rhs="")
 
         tag.setAttribute(`data-#{name}-${attr}`, count)
         styles += `[data-#{name}-${attr}=\"${count}\"] { ${rule} }\\n`
-        count++
 
         return styles
 
