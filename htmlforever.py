@@ -10,19 +10,19 @@ def tag(name="div", attrs=[], content="", rhs=""):
   def attributes(attrs):
     return "".join(
       map(lambda attr:
-        " " + attr[0] + "='" + attr[1] + "'"
+        " {}='{}'".format(attr[0], attr[1])
           if re.search("\"", attr[1])
-          else " " + attr[0] + "=\"" + attr[1] + "\""
+          else ' {}="{}"'.format(attr[0], attr[1])
         if re.search("[\s\"'=<>`]", attr[1])
-        else " " + attr[0] + "=" + attr[1], 
+        else " {}={}".format(attr[0], attr[1]),
         attrs
       )
     )
 
   return (
-    "<" + name + attributes(attrs) + ">\n" + content
+    '<{}{}>\n{}'.format(name, attributes(attrs), content)
     if (name in voidTags)
-    else "<" + name + attributes(attrs) + ">" + content + "</" + name + ">\n"
+    else '<{name}{attributes}>{content}</{name}>\n'.format(name=name, attributes=attributes(attrs), content=content)
   ) + rhs
 
 # HTML Helpers
@@ -136,17 +136,18 @@ def selectoryDemo(content="", rhs=""):
            selectory()) + rhs
 
 def jsincss(plugins=[], content="", rhs=""):
-  return tag("script", [["type", "module"]],\
-    "\n"\
-    + "  import jsincss from 'https://unpkg.com/jsincss/index.vanilla.js'\n"\
-    + "".join(map(lambda plugin:
-      "  import " + plugin[1] + " from 'https://unpkg.com/jsincss-" + plugin[0] + "/index.vanilla.js'\n", plugins))
-    + "\n"\
-    + "  jsincss(()=>`\n"\
-    + "\n"\
-    + "    " + content + "\n"\
-    + "\n"\
-    + "  `)\n") + rhs
+  plugins_str = "".join(map(lambda plugin:
+      "  import {} from 'https://unpkg.com/jsincss-{}/index.vanilla.js'\n".format(plugin[1], plugin[0]), plugins))
+
+  return tag("script", [["type", "module"]],
+    '''
+      import jsincss from 'https://unpkg.com/jsincss/index.vanilla.js'\n
+      {}
+    \n
+      jsincss(()=>`\n
+        {}\n
+      `)\n
+    '''.format(plugins_str, content)) + rhs
 
 def todo(title="", rhs=""):
   return doctype(
